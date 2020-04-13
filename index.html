@@ -1,29 +1,62 @@
-<p>With pandemic like COVID-19, monitoring and controlling the spread of the crisis is a crucial part of all the countries. In the early stages, controlling such a spread can save millions of lives and help maintain a stable economy. Thus, contact tracing becomes important for the health authorities to fight the control of epidemics. There have been several efforts in building contact tracing apps in India to combat the spread of the pandemic. However, many of these solutions put user&rsquo;s privacy at risk. We provide an alternative solution which can help health authorities to track and control the epidemic while preserving individual privacy. Our solution uses Bluetooth connection to communicate with the nearby devices.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INFO</title>
+    <style>
 
-<p>Introduction</p>
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center">APRICOT - A PRIvacy preserving COntact Tracing system</h1>
+    <p style="text-align:center">Shweta Mahajan</p>
+    <h2>Abstract</h2>
+        <p>With pandemic like COVID-19, monitoring and controlling the spread of the crisis is a crucial part of all the countries. In the early stages, controlling such a spread can save millions of lives and help maintain a stable economy. Thus, contact tracing becomes important for the health authorities to fight the control of epidemics. There have been several efforts in building contact tracing apps in India to combat the spread of the pandemic. However, many of these solutions put user’s privacy at risk. We provide an alternative solution which can help health authorities to track and control the epidemic while preserving individual privacy. Our solution uses Bluetooth connection to communicate with the nearby devices. </p>
+    <h2>1. Introduction</h2>
+    <p>The COVID-19 pandemic has spread like wildfire across the globe [1]. One of the key elements in countries who have managed to control the spread of COVID-19 is the use of contact tracing [2].  In the early stages, when there are fewer cases it is easy to manually perform contact tracing. But with thousands of infected patients building contact tracing is much more difficult [3].
 
-<p>The COVID-19 pandemic has spread like wildfire across the globe [1]. One of the key elements in countries who have managed to control the spread of COVID-19 is the use of contact tracing [2]. In the early stages, when there are fewer cases it is easy to manually perform contact tracing. But with thousands of infected patients building contact tracing is much more difficult [3].</p>
+        Countries have been employing a variety of means to enable contact tracing. Solutions that work for some countries might not work in other countries due to societal norms. Especially in India, where there is social stigma associated with the virus. There have been instances in India about the leakage of information of quarantine people and denial of services to health workers on the basis of potential risk of spread of virus through them [4]. With the absence of any data protection laws in India, collection of data and their misuse after the virus is a major threat. Further, giving the users the power to know about any infected person in close proximity can create mass panic and distrust of the system.
 
-<p>Countries have been employing a variety of means to enable contact tracing. Solutions that work for some countries might not work in other countries due to societal norms. Especially in India, where there is social stigma associated with the virus. There have been instances in India about the leakage of information of quarantine people and denial of services to health workers on the basis of potential risk of spread of virus through them [4]. With the absence of any data protection laws in India, collection of data and their misuse after the virus is a major threat. Further, giving the users the power to know about any infected person in close proximity can create mass panic and distrust of the system.</p>
+        Inspired by Singapore’s contact tracing app - TraceTogether [5], we propose a solution that preserves the privacy of the users (both infected and healthy ones) and discourages users from taking control of the system.
+    </p>
+    <h2>2. Proposed Solution</h2>
+    <h3>2.1 System overview</h3>
+    <p>In this section we first introduce our system and then describe various models in it.
 
-<p>Inspired by Singapore&rsquo;s contact tracing app - TraceTogether [5], we propose a solution that preserves the privacy of the users (both infected and healthy ones) and discourages users from taking control of the system.</p>
+        Apricot includes parties such as healthy (or not yet diagnosed) and diagnosed individuals with smart phones and health authorities or medical professionals. The system can be divided in four steps such as registration, data collection, uploading contact trace and viewing contact trace.
+    </p>
+    <h4>2.1.1 Registration</h4>
+    <p>The user signs up in the app using the OTP sent to the entered mobile number. The user is then assigned a 1000 pseudo-IDs. The pseudo-ID changes every 5 minutes. By using time-varying pseudo-ID, the app does keep the users private from each other. </p>
+    <h4>2.1.2 Data collection</h4>
+    <p>When the user is logged-in and has turned on Bluetooth, the APRICOT app announces itself to nearby APRICOT users using a pseudo-ID. The APRICOT app stores the pseudo-ID information of nearby users, along with the timestamp. This information, called the contact trace, is stored in the app. Each phone scans for the nearby devices for a time interval of 1 min. The contact history is deleted after 30 days</p>
 
-<p>Proposed Solution  System Overview</p>
+    <h4>2.1.3 Upload contact trace</h4>
+    <p>When an APRICOT user uploads (voluntarily) the contact trace from the app to the server, the APRICOT server comes to know the contact trace of that user.</p>
 
-<p>In this section we first introduce our system and then describe various models in it.</p>
+    <h4>2.1.4 View contact trace</h4>
+    <p>The contact trace uploaded (voluntarily) by a user is to be viewed at the APRICOT server by the health authority by entering the mobile number of the person whose contact trace is to be viewed.</p>
 
-<p>Apricot includes parties such as healthy (or not yet diagnosed) and diagnosed individuals with smart phones and health authorities or medical professionals. The system can be divided in four steps such as registration, data collection, uploading contact trace and viewing contact trace.  Registration</p>
+    <h2>3. Trust and privacy model</h2>
+    <p>The proposed system is designed around a model that assumes there is a semi-trusted authority maintaining the server with diagnosed carriers’ contact histories. The system is designed to minimize the amount of diagnosed carriers’ information that is exposed to other users, and to maximize the privacy for all other users of the system. However, diagnosed users do risk forfeiting some privacy when they share their contact histories with the authority managing the server.
 
-<p>The user signs up in the app using the OTP sent to the entered mobile number. The user is then assigned a 1000 pseudo-IDs. The pseudo-ID changes every 5 minutes. By using time-varying pseudo-ID, the app does keep the users private from each other.  Data collection</p>
+        That said, the contact trace information is to be deleted at the APRICOT server after the period of disease containment.
+    </p>
 
-<p>When the user is logged-in and has turned on Bluetooth, the APRICOT app announces itself to nearby APRICOT users using a pseudo-ID. The APRICOT app stores the pseudo-ID information of nearby users, along with the timestamp. This information, called the contact trace, is stored in the app. Each phone scans for the nearby devices for a time interval of 1 min. The contact history is deleted after 30 days.  Uploading contact trace When an APRICOT user uploads (voluntarily) the contact trace from the app to the server, the APRICOT server comes to know the contact trace of that user. Viewing contact traces The contact trace uploaded (voluntarily) by a user is to be viewed at the APRICOT server by the health authority by entering the mobile number of the person whose contact trace is to be viewed. In the following section we expand upon Step 3 and Step 4. (TO-DO) Trust and privacy model The proposed system is designed around a model that assumes there is a semi-trusted authority maintaining the server with diagnosed carriers&rsquo; contact histories. The system is designed to minimize the amount of diagnosed carriers&rsquo; information that is exposed to other users, and to maximize the privacy for all other users of the system. However, diagnosed users do risk forfeiting some privacy when they share their contact histories with the authority managing the server.</p>
+    <a href="https://apricot.safe-analytics.in/implementation">Apricot Implementation</a>
+    <br>
+    <br>
+    <a href="https://apricot.safe-analytics.in/privacy-policy">Apricot Privacy Policy</a>
 
-<p>That said, the contact trace information is to be deleted at the APRICOT server after the period of disease containment.   References</p>
+    <h2>References</h2>
+    <p>[1] “Novel Coronavirus Map from HealthMap,” March 2020. [Online]. Available: https: //www.healthmap.org/covid-19/ </p>
+    <p>[2] K. T. Eames and M. J. Keeling, “Contact tracing and disease control,” Proceedings of the Royal Society of London. Series B: Biological Sciences, vol. 270, no. 1533, pp. 2565–2571, 2003.</p>
 
-<p>[1] &ldquo;Novel Coronavirus Map from HealthMap,&rdquo; March 2020. [Online]. Available: https: //www.healthmap.org/covid-19/</p>
+    <p>[3] B. Chappell, “Coronavirus: Sacramento County Gives Up On Automatic 14-Day Quarantines,” https://www.npr.org/sections/health-shots/2020/03/10/813990993/coronavirus-sacramento-countygives-up-on-automatic-14-day-quarantines, 2020, accessed: 2020-03-23.</p>
 
-<p>[2] K. T. Eames and M. J. Keeling, &ldquo;Contact tracing and disease control,&rdquo; Proceedings of the Royal Society of London. Series B: Biological Sciences, vol. 270, no. 1533, pp. 2565&ndash;2571, 2003.</p>
+    <p>[4] Subhashis B, Bhaskaran R, Subodh S, “Apps for Covid: to do or not to do”, Ideas for India, 2020 </p>
 
-<p>[3] B. Chappell, &ldquo;Coronavirus: Sacramento County Gives Up On Automatic 14-Day Quarantines,&rdquo; https://www.npr.org/sections/health-shots/2020/03/10/813990993/coronavirus-sacramento-countygives-up-on-automatic-14-day-quarantines, 2020, accessed: 2020-03-23.</p>
+    <p>[5] “Help speed up contact tracing with TraceTogether,” Singapore Government Blog, March 2020. [Online]. Available: https://www.gov.sg/article/help-speed-up-contact-tracing-with-tracetogether</p>
 
-<p>[4] Subhashis B, Bhaskaran R, Subodh S, &ldquo;Apps for Covid: to do or not to do&rdquo;, Ideas for India, 2020  [5] &ldquo;Help speed up contact tracing with TraceTogether,&rdquo; Singapore Government Blog, March 2020. [Online]. Available: https://www.gov.sg/article/help-speed-up-contact-tracing-with-tracetogether</p>
+
+</body>
+</html>
