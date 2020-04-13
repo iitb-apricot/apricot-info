@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Implementation</title>
+</head>
+<body>
+    <h1 style="text-align:center">APRICOT Implementation</h1>
+    <p style="text-align: center">Bhaskaran Raman, Palash Jain, Shweta Mahajan, Neeraj Kerkar, Shahrukh Hussain, Mayank Kush, Mohit Garg, Bhavesh Kumar, Varunesh</p>
+    <h2>1. Registration</h2>
+    <h3>1.1 Generate OTP</h3>
+    <p>App sends phone num, app_id, device_id. Server creates and associates a random OTP token with the given details. Server sends this token to the given phone num via sms.</p>
+
+    <h3>1.2 Verify OTP</h3>
+    <p>App sends otp, phone num, app_id, device_id. Server verifies otp and logs in the user if the given otp is correct. The server generates for the user an access token, user id and pseudo ids (see pseudo id generation below). This generated info is returned to the app as the api response.</p>
+
+    <h3>1.3 Pseudo id generation</h3>
+    <ul>
+        <li>Generation of NUM_PSEUDO_IDS (Default 1000) pseudo-ids per user</li>
+
+        <li>At time of user account creation, generate NUM_PSEUDO_IDS random pseudo-ids (all 160 bit), send it to app at time of successful login</li>
+
+        <li>First 128 bits are set to the pattern: 8888-8888-8888-8888-8888-8888-8888-8888 (32 hexadecimal 8s)</li>
+
+        <li>Server stores pseudo id -> user mapping in database.</li>
+    </ul>
+
+    <h2>2. Data collection</h2>
+
+    <h3>2.1 Beacon Specification</h3>
+
+    <p>Suppose beacon length is 160 bits. Just one of random pseudo-ids received from server is used.
+        Phone sets beacon randomly: changes every BEACON_CHANGE_INTERVAL (Default 5 mins)
+
+    </p>
+
+    <h3>2.2 Beacon Detection and Storage</h3>
+
+    <ul>
+        <li>App scans every BEACON_DETECT_INTERVAL (Default 1 min)</li>
+
+        <li>Stores list of beacons seen (160 bit values)</li>
+
+        <li>If CONTACT_TIMESTAMP_OPTION (Default yes) enabled then 32-bit TimeStamp = real app-side timestamp</li>
+
+        <li>Else the 32-bit TimeStamp = all zeros</li>
+
+        <li>Store in file; new file everyday; can delete files older than CONTACT_HISTORY_MAX (Default 30) days</li>
+
+        <li>Storage estimate: Say 20 beacons found every minute, file size per day = (160+32) x 20 x 60 x 24 = 691,200 bytes per day</li>
+
+
+    </ul>
+
+    <h2>3. Upload contact trace</h2>
+    <ul>
+        <li>App specifies its own clock time at the time of upload, to adjust for timing diff between server and app</li>
+
+        <li>Login token expected</li>
+
+        <li> Aside from this, this API is just a file upload (POST)</li>
+
+        <li>The app may call the API multiple times, once for each file</li>
+
+
+    </ul>
+
+    <h2>4. View contact trace</h2>
+    <ul>
+        <li>
+            This needs authority login on the server (accounts will be created manually by admin)
+        </li>
+
+        <li>Input: phone number (will be of patient who tested +ve, but server code does not need to know that)</li>
+
+        <li>Get real user-id from pseudo-user-id (using database index lookup)</li>
+
+        <li>The list will include timestamp too (will be 0 if CONTACT_TIMESTAMP_OPTION (Default yes) disabled)</li>
+    </ul>
+
+    <h2> Apricot Open Source Implementation</h2>
+    <p>Android code: <a href="https://gitlab.com/mayankkussh/apricot">https://gitlab.com/mayankkussh/apricot</a></p>
+    <p>iOS code: <a href="https://gitlab.com/hshahrukh/contact-tracing-ios">https://gitlab.com/hshahrukh/contact-tracing-ios</a></p>
+    <p>Server code: <a href="https://gitlab.com/mhjn_shweta/contact_tracing">https://gitlab.com/mhjn_shweta/contact_tracing</a></p>
+
+</body>
+</html>
